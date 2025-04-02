@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: theme('fontFamily.sans');
+    font-size: 16px; /* Base font size */
+  }
+  body {
+    @apply bg-brand-white-hueso text-brand-gray-dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+  h1 { @apply text-2xl; } /* Example: Adjust sizes as needed */
+  h2 { @apply text-xl; }
+  h3 { @apply text-lg; }
+
+  a {
+    @apply text-blue-600 hover:text-blue-800;
+    text-decoration: inherit;
+  }
+}
+
+/* Your custom CSS can go below */

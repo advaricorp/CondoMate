@@ -1,0 +1,12 @@
+{
+  "type": "MOCK",
+  "requestTemplates": {
+    "application/json": "{\"statusCode\": 200}"
+  },
+  "responseParameters": {
+    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin": "'http://18.233.58.28'",
+    "method.response.header.Access-Control-Allow-Credentials": "'true'"
+  }
+} 

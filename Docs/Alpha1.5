@@ -1,0 +1,193 @@
+# CondoMate Alpha 1.5 Documentation
+
+## Updates from Alpha 1.0
+
+### Key Challenges & Solutions
+
+1. **CORS Configuration with API Gateway**
+   - **Challenge**: Frontend requests were being blocked by CORS policy, particularly for `/auth/token` and `/users/me` endpoints
+   - **Solution**: Implemented comprehensive CORS configuration in both API Gateway and backend:
+     ```bash
+     # API Gateway CORS Configuration for /auth/token
+     aws apigateway put-integration-response \
+       --rest-api-id 0s85lrdrl0 \
+       --resource-id 3usrps \
+       --http-method OPTIONS \
+       --status-code 200 \
+       --response-parameters '{
+         "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+         "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+         "method.response.header.Access-Control-Allow-Origin": "'http://18.233.58.28'"
+       }'
+     ```
+
+2. **API Gateway Integration**
+   - **Challenge**: Proper forwarding of requests from API Gateway to backend
+   - **Solution**: Updated integration settings for each endpoint:
+     ```json
+     {
+       "type": "HTTP",
+       "httpMethod": "GET",
+       "uri": "http://18.233.58.28:8000/api/v1/users/me",
+       "connectionType": "INTERNET",
+       "timeoutInMillis": 29000
+     }
+     ```
+
+3. **Authentication Flow**
+   - **Challenge**: Managing the complete authentication flow from login to user data retrieval
+   - **Solution**: Implemented two-step authentication process:
+     1. Token acquisition (`/auth/token`)
+     2. User data retrieval (`/users/me`)
+
+### Critical Routes & Configurations
+
+1. **Authentication Endpoints**
+   ```
+   POST /api/v1/auth/token
+   - Purpose: User authentication
+   - Headers: Content-Type: application/x-www-form-urlencoded
+   - Body: username, password
+   - Response: JWT token
+
+   GET /api/v1/users/me
+   - Purpose: Get authenticated user data
+   - Headers: Authorization: Bearer <token>
+   - Response: User profile data
+   ```
+
+2. **Frontend Configuration**
+   ```javascript
+   // API Client Configuration
+   const apiClient = axios.create({
+     baseURL: API_BASE_URL,
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     withCredentials: false  // Important for API Gateway
+   });
+   ```
+
+3. **Backend CORS Settings**
+   ```python
+   app.add_middleware(
+       CORSMiddleware,
+       allow_origins=["http://18.233.58.28"],
+       allow_credentials=True,
+       allow_methods=["*"],
+       allow_headers=["*"],
+   )
+   ```
+
+### Infrastructure Updates
+
+1. **API Gateway Structure**
+   ```
+   /api/v1/
+   ├── auth/
+   │   └── token [POST, OPTIONS]
+   ├── users/
+   │   └── me [GET, OPTIONS]
+   ├── calendar [GET, POST]
+   ├── documents [GET, POST]
+   └── payments [GET, POST]
+   ```
+
+2. **Environment Configuration**
+   ```
+   # Backend (.env)
+   MONGO_DB_URL="mongodb://localhost:27017"
+   MONGO_DB_NAME="condomate"
+   SECRET_KEY="your_strong_secret_key_here"
+   
+   # Frontend (.env)
+   VITE_API_URL="https://0s85lrdrl0.execute-api.us-east-1.amazonaws.com/prod/api/v1"
+   ```
+
+### Security Considerations
+
+1. **CORS Headers**
+   - Strict origin checking
+   - Specific allowed methods
+   - Controlled header exposure
+
+2. **API Gateway Security**
+   - Request validation
+   - Rate limiting
+   - AWS IAM integration
+
+3. **Authentication Flow**
+   - JWT token validation
+   - Secure password handling
+   - Session management
+
+### Development Guidelines
+
+1. **API Gateway Updates**
+   ```bash
+   # After making changes, always create a new deployment
+   aws apigateway create-deployment \
+     --rest-api-id 0s85lrdrl0 \
+     --stage-name prod \
+     --description "Updated CORS configuration"
+   ```
+
+2. **Testing Endpoints**
+   ```bash
+   # Test authentication
+   curl -X POST https://[API_GATEWAY_URL]/api/v1/auth/token \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "username=user@example.com&password=password"
+
+   # Test protected endpoints
+   curl -X GET https://[API_GATEWAY_URL]/api/v1/users/me \
+     -H "Authorization: Bearer <token>"
+   ```
+
+### Known Issues & Workarounds
+
+1. **CORS Preflight Requests**
+   - Issue: OPTIONS requests must be handled properly
+   - Solution: Configured mock integrations for OPTIONS
+
+2. **API Gateway Timeouts**
+   - Issue: Default 29-second timeout
+   - Solution: Adjusted backend processing time
+
+3. **Token Management**
+   - Issue: Token refresh mechanism
+   - Solution: Implemented automatic token refresh in frontend
+
+### Next Steps
+
+1. **Planned Improvements**
+   - Implement refresh token mechanism
+   - Add request caching
+   - Enhance error handling
+   - Add request logging
+
+2. **Security Enhancements**
+   - Add rate limiting
+   - Implement request validation
+   - Add API key management
+
+3. **Monitoring & Logging**
+   - Set up CloudWatch metrics
+   - Implement request tracing
+   - Add performance monitoring
+
+### Demo Users
+
+```
+Admin User:
+- Email: dumbledore@hogwarts.wiz
+- Password: Phoenix123!
+
+Manager User:
+- Email: minerva@hogwarts.wiz
+- Password: Transfiguration123!
+
+Regular User:
+- Email: harry@hogwarts.wiz
+- Password: Quidditch123!
+``` 

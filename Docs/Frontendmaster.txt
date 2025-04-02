@@ -1,0 +1,173 @@
+﻿Documento Maestro: Guía para la Interfaz Web y Estilos de CondoMate
+
+1. Imagen de Marca y Colores
+
+1.1 Nombre y Descripción del Producto
+
+Nombre del Producto: CondoMate
+
+Descripción Resumida: CondoMate es una plataforma web enfocada en la presentación clara y elegante de información de administración de condominios. Su interfaz se inspira en la estética de Apple y utiliza una paleta de colores suaves para garantizar una excelente experiencia de usuario, incluso para personas de mayor edad.
+
+2. Paleta de Colores y Tipografía
+
+2.1 Colores Principales
+
+Blanco Hueso (#F8F8F8): Fondo principal (con la intención de dar sensación de amplitud y limpieza).
+
+Gris Claro (#E6E6E6): Para separadores, bordes y secciones secundarias.
+
+Gris Oscuro (#4A4A4A): Texto principal, fácil de leer gracias a su contraste.
+
+Azul Pastel (#A4C8F0): Botones de acción y resaltados.
+
+Verde Suave (#B2D7AC): Indicadores de estado exitoso o completado.
+
+Rojo Claro (#F5C6C6): Alertas o estados pendientes.
+
+El objetivo es lograr un alto contraste en textos e íconos, manteniendo una apariencia minimalista y relajada.
+
+2.2 Tipografía y Estilo
+
+Tipografía: Se recomienda el uso de Helvetica Neue o Inter, por su legibilidad.
+
+Tamaño de Fuente: Idealmente 16px para el cuerpo del texto y 18px o 20px para títulos y encabezados.
+
+Espaciados: Mantener espacios generosos entre secciones, botones y líneas de texto para facilitar la lectura.
+
+3. Estructura del Frontend con React y Vite
+
+Creación del Proyecto:
+
+npm create vite@latest frontend --template react
+cd frontend
+npm install
+
+Tailwind CSS (Recomendado):
+
+Instalar Tailwind siguiendo la documentación oficial.
+
+Configurar tailwind.config.js para incluir la paleta de colores definida.
+
+Aplicar clases de Tailwind en los componentes para lograr la estética deseada.
+
+React Router:
+
+Añadir react-router-dom para gestionar la navegación entre vistas (por ejemplo, Login, Dashboard, Pagos, Calendario, etc.).
+
+4. Organización de Componentes
+
+Se sugiere dividir la aplicación en carpetas para cada sección:
+
+components/: Componentes reutilizables o de UI.
+
+pages/ (o views/): Páginas principales como Login, Dashboard, Payments, Calendar, Documents.
+
+App.jsx: Punto de entrada de las rutas, donde se definen las rutas con React Router.
+
+Un ejemplo de estructura:
+
+src/
+  ├─ components/
+  │    ├─ NavBar.jsx
+  │    ├─ Footer.jsx
+  │    └─ Button.jsx
+  ├─ pages/
+  │    ├─ Login.jsx
+  │    ├─ Dashboard.jsx
+  │    ├─ Payments.jsx
+  │    ├─ Calendar.jsx
+  │    └─ Documents.jsx
+  ├─ App.jsx
+  └─ main.jsx
+
+5. Estilos y Accesibilidad
+
+Colores y Contrastes:
+
+Utilizar fondos claros con texto oscuro (p.ej. #4A4A4A sobre #F8F8F8) para mejorar la lectura.
+
+Para alertas, usar tonos suaves de rojo, verde o azul, asegurando siempre suficiente contraste.
+
+Tipografía y Tamaño de Letra:
+
+Mantener un mínimo de 16px en cuerpo de texto.
+
+Utilizar fuentes sans-serif y jerarquías claras en títulos y subtítulos.
+
+Componentes Responsivos:
+
+Tailwind facilita el uso de clases como md:w-1/2, lg:w-1/3, etc.
+
+Asegurar que los botones y campos sean lo suficientemente grandes para usarse en dispositivos táctiles.
+
+Íconos:
+
+Usar íconos minimalistas (por ejemplo, librerías como Heroicons o Font Awesome).
+
+Asegurarse de que tengan buen contraste con el fondo.
+
+6. Ejemplo de Componente: Payments.jsx
+
+import React, { useState, useEffect } from 'react';
+
+const Payments = () => {
+  const [payments, setPayments] = useState([]);
+
+  useEffect(() => {
+    // Aquí se podría hacer una llamada a API para cargar la lista de pagos
+    setPayments([
+      { id: 1, status: 'Pendiente' },
+      { id: 2, status: 'Pagado' },
+    ]);
+  }, []);
+
+  return (
+    <div className="p-4">
+      <h2 className="text-2xl mb-4 text-gray-700 font-bold">Pagos</h2>
+      <ul className="bg-white shadow rounded p-4">
+        {payments.map((payment) => (
+          <li key={payment.id} className="mb-2">
+            <span className="text-gray-800">
+              Pago #{payment.id} - Estado: {payment.status}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Payments;
+
+En este componente:
+
+Se define un estado local para almacenar los pagos.
+
+Se realiza un useEffect para cargar datos (de forma simulada o desde API).
+
+Se muestran los pagos en un ul con clases de Tailwind para dar estilo.
+
+7. Buenas Prácticas de Diseño
+
+Simplicidad: Mantener la interfaz lo más minimalista posible, con el uso estratégico de colores para resaltar acciones importantes.
+
+Coherencia: Reutilizar los mismos estilos de botones, tipografía y espaciados en todas las páginas.
+
+Accesibilidad: Verificar contrastes de color y contemplar etiquetas descriptivas en íconos para lectores de pantalla.
+
+Pruebas de Vista: Probar la app en distintas resoluciones y dispositivos (móvil, tablet, desktop) para asegurar su adaptación.
+
+8. Conclusión
+
+Este documento se centra únicamente en la parte visual y de frontend de CondoMate. Siguiendo esta guía de colores, tipografía y organización con React + Vite, tendrás una interfaz agradable, clara y consistente, especialmente pensada para usuarios de todas las edades.
+
+Recuerda:
+
+Mantén el diseño sencillo y enfocado en la usabilidad.
+
+Usa componentes reutilizables y un sistema de estilos coherente.
+
+Asegura la accesibilidad mediante buen contraste y tipografía clara.
+
+¡Éxito en la construcción de tu frontend!
+

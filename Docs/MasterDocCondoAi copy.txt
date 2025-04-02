@@ -1,0 +1,607 @@
+﻿1. Requerimientos Principales
+Tu idea incluye varias funcionalidades clave que podemos organizar así:
+* Para los Condóminos (Usuarios):
+   * Ver el estatus de pagos de mantenimiento (pendiente, en revisión, pagado).
+   * Consultar fechas de pago.
+   * Acceder a un calendario de juntas.
+   * Descargar o visualizar actas de asambleas.
+   * Posibilidad de cargar comprobantes de pago para que la administración los verifique.
+   * Información personalizada: cada usuario solo ve datos de su propio condominio.
+* Para el Administrador:
+   * Alimentar la aplicación con información actualizada (pagos, juntas, actas, etc.).
+   * Verificar y actualizar el estatus de los pagos (basado en comprobantes subidos o entregados físicamente).
+   * Gestionar la información específica de cada condominio.
+* Multi-condominio:
+   * La aplicación debe servir para varios condominios, con administradores asignados a cada uno.
+   * Los datos deben estar segmentados para que cada usuario vea solo lo que le corresponde.
+________________
+
+
+2. Tecnologías Recomendadas
+Como buscas algo económico y efectivo, y ya eres programador, puedes usar herramientas gratuitas o de bajo costo. Aquí te sugiero un stack tecnológico:
+Frontend (Interfaz de usuario):
+* Framework: Usa React.js o Vue.js. Son ligeros, gratuitos y te permiten crear una interfaz dinámica y responsive.
+* Diseño: Integra Bootstrap o Tailwind CSS (ambos gratuitos) para un diseño moderno sin mucho esfuerzo.
+Backend (Lógica del servidor):
+* Servidor: Node.js con Express.js. Es gratuito, fácil de configurar y perfecto para aplicaciones web.
+* Base de Datos:
+   * MongoDB: NoSQL, gratuito con MongoDB Atlas (hasta 512 MB en el plan free).
+   * O PostgreSQL: SQL gratuito si prefieres algo más estructurado, con hosting en servicios como Supabase (plan gratuito disponible).
+* Autenticación: Usa JSON Web Tokens (JWT) para sesiones seguras. Es una solución estándar y sin costo.
+Hosting:
+* Vercel: Ideal para frontend y backend sencillo, con un plan gratuito generoso.
+* Heroku: Bueno para backend y base de datos, también con un tier gratuito (aunque limitado en horas).
+* Dominio: Compra un dominio barato en Namecheap (~$10-15 al año).
+IA (Opcional):
+Dado tu expertise en IA, puedes añadir valor:
+* OCR: Usa Tesseract.js (gratis) para leer comprobantes de pago subidos y extraer datos como monto o fecha.
+* Automatización: Implementa un script simple para clasificar pagos automáticamente tras el OCR.
+________________
+
+
+3. Estructura de la Aplicación
+La aplicación puede tener las siguientes secciones:
+* Dashboard (Página Principal):
+   * Resumen de pagos pendientes, próximas juntas y notificaciones.
+* Sección de Pagos:
+   * Historial de pagos.
+   * Botón para subir comprobantes (con estatus: "Pendiente de pago", "En revisión", "Pagado").
+* Calendario:
+   * Fechas de juntas y eventos importantes.
+* Documentos:
+   * Actas de asambleas descargables.
+* Perfil:
+   * Datos básicos del usuario (nombre, unidad, condominio).
+* Panel de Administración:
+   * Gestionar usuarios, actualizar información y aprobar pagos.
+________________
+
+
+4. Seguridad
+* Autenticación: Usa JWT para validar usuarios.
+* Roles: Define roles (condómino y administrador) para limitar accesos.
+* Segmentación: Filtra datos por condominio en el backend (por ejemplo, un campo condominio_id en la base de datos).
+* Encriptación: Usa HTTPS (gratis con Vercel o Heroku) y encripta contraseñas con bcrypt.
+________________
+
+
+5. Implementación Barata y Efectiva
+Desarrollo:
+* Tiempo: Como tú programas, el costo principal es tu tiempo.
+* Prototipo: Empieza con un MVP (Producto Mínimo Viable) que incluya el dashboard, pagos y calendario.
+* Código Abierto: Reusa librerías y tutoriales gratuitos.
+Despliegue:
+* Usa GitHub para control de versiones y Vercel para hosting gratuito.
+* Configura un entorno local con Docker (opcional) para pruebas consistentes.
+Costo Total:
+* Hosting: $0 con planes gratuitos de Vercel/Heroku.
+* Dominio: ~$10-15 al año.
+* IA: Gratis con Tesseract.js o similar; si usas servicios como Google Cloud Vision, evalúa el tier gratuito.
+________________
+
+
+6. Funcionalidad de Pagos
+* Flujo:
+   1. El condómino sube un comprobante (o lo entrega físicamente).
+   2. El estatus se marca como "Pendiente de aprobación".
+   3. El administrador verifica el pago y lo actualiza a "Pagado".
+* IA: Si implementas OCR, el sistema puede pre-llenar datos del comprobante (monto, fecha) para ahorrar tiempo.
+________________
+
+
+7. Escalabilidad
+* Multi-condominio: Diseña la base de datos con un campo condominio_id para separar datos.
+* Administradores: Asocia cada administrador a uno o más condominios mediante una tabla de permisos.
+________________
+
+
+8. Próximos Pasos
+1. Prototipo: Crea una versión básica con login, dashboard y sección de pagos.
+2. Pruebas: Usa un condominio ficticio para testear.
+3. Feedback: Muéstralo a posibles usuarios o administradores.
+4. Lanzamiento: Despliega en Vercel y ajusta según retroalimentación.
+________________
+
+
+Conclusión
+Con React.js, Node.js, MongoDB y hosting gratuito en Vercel, puedes construir esta aplicación de manera barata y efectiva. Tu especialización en IA te da la ventaja de añadir automatización (como OCR) sin costo extra usando herramientas abiertas. ¡Es un proyecto alcanzable y útil que puedes escalar con el tiempo!
+¿Necesitas más detalles sobre alguna parte? ¡Estoy aquí para ayudarte!
+bien necesito que me armes un documento largo, con instrucciones para mi agente en curso ide, lo dividas en servicios, le digas q refactorize bien el codigo de cada servicio, que use un front end en react con vite, lo voy a montar en una maquina de e2c de aws, t3 medium, necesito que se aviente el prototipi y servicios lo mas rapido ppislb,e itere con pruebas y scripts, cada servicio al final que todo funcione debe dockerizarse, debe ser sencillo para salir a produccion en 2 semanas o 1 mes, asi de rapido con cursor ide y modo agente, mete lo de ocr, mete cosas de ai , yo tengo un saas de agentes tools rag etc, no es necesario meter esto pero si es util , aparte le puedo meter mis agentes como asisetnetes, lee bien el documento original q te mande,, espero tu documento maestro, con arquitectura y con cada servicio hasta el final par que lo arme mi cursor mientras yo levanto la maquina en amazon, no olvides mencionarme puertos , estoy detras de aws gateway asi que igual tendre q levantar una api nueva todo desde consola de terminal con amazon cli que se debe de instalar, la adminsitracion del gateay metodos cors se hara con ai desde el amazon cli,
+Thought for1m 24s
+Expand for details
+Entiendo que necesitas un documento detallado para guiar a tu agente en Cursor IDE a desarrollar una aplicación web para la administración de condominios. El objetivo es que sea rápido, efectivo y que se pueda desplegar en una instancia EC2 de AWS (t3.medium) en un plazo de 1 a 2 semanas. La aplicación debe incluir funcionalidades como gestión de pagos, calendarios, documentos y un panel de administración, con la posibilidad de integrar IA para OCR y otras mejoras. Además, cada servicio debe ser dockerizado al final del proceso.
+Voy a estructurar el documento en secciones claras, detallando la arquitectura, los servicios, las tecnologías a usar, y los pasos para implementar cada parte. También incluiré consideraciones sobre puertos, AWS CLI, y la gestión de API Gateway con CORS.
+________________
+
+
+Documento Maestro: Desarrollo de Aplicación Web para Administración de Condominios
+Objetivo: Desarrollar una aplicación web para la administración de condominios habitacionales, con funcionalidades para condóminos y administradores, incluyendo gestión de pagos, calendarios, documentos y más. La aplicación debe ser desplegada en una instancia EC2 de AWS (t3.medium) y estar lista para producción en 1-2 semanas.
+Tecnologías Principales:
+* Frontend: React con Vite
+* Backend: Node.js con Express.js
+* Base de Datos: MongoDB (MongoDB Atlas - plan gratuito)
+* Autenticación: JSON Web Tokens (JWT)
+* OCR (IA): Tesseract.js para lectura de comprobantes
+* Despliegue: Docker en EC2 (t3.medium), gestionado con AWS CLI y API Gateway
+Arquitectura General:
+* Frontend: Aplicación React servida desde la instancia EC2.
+* Backend: API RESTful en Node.js, dockerizada y desplegada en EC2.
+* Base de Datos: MongoDB Atlas (cloud) para facilitar la gestión y escalabilidad.
+* OCR: Integrado en el backend para procesar comprobantes subidos por los usuarios.
+Servicios a Desarrollar:
+1. Servicio de Autenticación
+2. Servicio de Gestión de Usuarios
+3. Servicio de Pagos
+4. Servicio de Calendario
+5. Servicio de Documentos
+6. Servicio de OCR (IA)
+7. Panel de Administración
+________________
+
+
+Instrucciones Generales para el Agente en Cursor IDE
+* Refactorización: Asegúrate de que el código de cada servicio esté bien estructurado y refactorizado. Usa módulos y separa preocupaciones (controladores, servicios, modelos).
+* Pruebas: Implementa pruebas unitarias y de integración para cada servicio. Usa scripts de prueba automatizados.
+* Dockerización: Al finalizar cada servicio, crea un Dockerfile y docker-compose.yml para facilitar el despliegue.
+* Iteración Rápida: Desarrolla en sprints cortos, probando cada funcionalidad antes de pasar a la siguiente.
+________________
+
+
+1. Configuración Inicial
+Objetivo: Preparar el entorno de desarrollo y la instancia EC2.
+Pasos:
+* Instancia EC2:
+   * Lanza una instancia t3.medium con Amazon Linux 2.
+   * Configura reglas de seguridad para permitir tráfico en los puertos necesarios (por ejemplo, 80, 443, 3000 para desarrollo).
+* AWS CLI:
+   * Instala AWS CLI en la instancia EC2 para gestionar API Gateway y otros servicios.
+   * Configura las credenciales de AWS con aws configure.
+* API Gateway:
+   * Crea una API REST en API Gateway desde la consola de AWS.
+   * Configura CORS para permitir solicitudes desde el frontend (dominio a definir).
+   * Usa AWS CLI para gestionar métodos y recursos si es necesario.
+________________
+
+
+2. Desarrollo del Frontend (React con Vite)
+Objetivo: Crear una interfaz de usuario dinámica y responsive.
+Pasos:
+* Configuración:
+   * Usa Vite para inicializar el proyecto: npm create vite@latest frontend --template react.
+   * Instala dependencias clave: react-router-dom, axios, bootstrap o tailwindcss.
+* Estructura:
+   * Crea componentes para cada sección: Dashboard, Pagos, Calendario, Documentos, Perfil, Login.
+   * Implementa un sistema de rutas con react-router-dom.
+* Integración con Backend:
+   * Usa axios para hacer solicitudes a la API backend.
+   * Gestiona la autenticación con JWT almacenado en localStorage o cookies.
+* Despliegue:
+   * Construye el frontend con npm run build y sirve los archivos estáticos desde el backend o un servidor web en EC2 (por ejemplo, Nginx).
+________________
+
+
+3. Desarrollo del Backend (Node.js con Express.js)
+Objetivo: Crear una API RESTful para gestionar la lógica de negocio.
+Pasos:
+* Configuración:
+   * Inicializa el proyecto: npm init -y.
+   * Instala dependencias: express, mongoose, jsonwebtoken, bcryptjs, multer (para subida de archivos), tesseract.js.
+* Estructura:
+   * Organiza en carpetas: controllers, models, routes, services, middlewares.
+   * Implementa middlewares para autenticación y manejo de errores.
+* Base de Datos:
+   * Conecta a MongoDB Atlas usando mongoose.
+   * Define esquemas para usuarios, pagos, eventos, documentos, etc.
+* Autenticación:
+   * Implementa endpoints para registro y login, usando JWT.
+   * Protege rutas sensibles con middleware de autenticación.
+* Despliegue:
+   * Crea un Dockerfile para el backend.
+   * Usa docker-compose para orquestar el backend y otros servicios si es necesario.
+________________
+
+
+4. Servicios Específicos
+4.1. Servicio de Autenticación
+* Funcionalidades:
+   * Registro de usuarios (condóminos y administradores).
+   * Login y generación de JWT.
+   * Verificación de roles.
+* Endpoints:
+   * POST /api/auth/register
+   * POST /api/auth/login
+* Consideraciones:
+   * Encripta contraseñas con bcryptjs.
+   * Define roles en la base de datos (por ejemplo, "condómino", "administrador").
+4.2. Servicio de Gestión de Usuarios
+* Funcionalidades:
+   * Obtener perfil de usuario.
+   * Actualizar información personal.
+* Endpoints:
+   * GET /api/users/profile
+   * PUT /api/users/profile
+* Consideraciones:
+   * Asegúrate de que solo el usuario autenticado pueda acceder a su propio perfil.
+4.3. Servicio de Pagos
+* Funcionalidades:
+   * Ver historial de pagos.
+   * Subir comprobantes de pago.
+   * Actualizar estatus de pagos (administrador).
+* Endpoints:
+   * GET /api/payments
+   * POST /api/payments/upload
+   * PUT /api/payments/:id/status (solo administradores)
+* Consideraciones:
+   * Usa multer para manejar la subida de archivos.
+   * Almacena los comprobantes en un directorio seguro o en un servicio como S3 (opcional).
+4.4. Servicio de Calendario
+* Funcionalidades:
+   * Ver eventos y juntas.
+   * Crear y editar eventos (administrador).
+* Endpoints:
+   * GET /api/calendar
+   * POST /api/calendar (solo administradores)
+   * PUT /api/calendar/:id (solo administradores)
+* Consideraciones:
+   * Filtra eventos por condominio.
+4.5. Servicio de Documentos
+* Funcionalidades:
+   * Ver y descargar actas de asambleas.
+   * Subir nuevos documentos (administrador).
+* Endpoints:
+   * GET /api/documents
+   * POST /api/documents (solo administradores)
+* Consideraciones:
+   * Almacena documentos en el sistema de archivos o en S3.
+4.6. Servicio de OCR (IA)
+* Funcionalidades:
+   * Extraer datos de comprobantes subidos (monto, fecha, etc.).
+* Implementación:
+   * Usa tesseract.js en el backend para procesar imágenes de comprobantes.
+   * Integra el OCR en el flujo de subida de comprobantes para pre-llenar datos.
+* Consideraciones:
+   * Asegúrate de que las imágenes sean legibles y estén en formatos soportados.
+4.7. Panel de Administración
+* Funcionalidades:
+   * Gestionar usuarios, pagos, eventos y documentos.
+* Endpoints:
+   * Extiende los servicios anteriores con permisos de administrador.
+* Consideraciones:
+   * Implementa un middleware para verificar el rol de administrador.
+________________
+
+
+5. Integración de IA Adicional (Opcional)
+* Agentes y Tools: Si tienes un SaaS de agentes y tools, puedes integrarlos para automatizar tareas como:
+   * Clasificación automática de documentos.
+   * Generación de recordatorios para pagos o eventos.
+* RAG (Retrieval-Augmented Generation): Útil para generar respuestas automáticas a preguntas frecuentes de los condóminos.
+________________
+
+
+6. Despliegue en EC2
+Objetivo: Desplegar la aplicación en la instancia EC2 usando Docker.
+Pasos:
+* Dockerización:
+   * Crea un Dockerfile para el backend y otro para el frontend (si es necesario).
+   * Usa docker-compose para gestionar contenedores (por ejemplo, backend y Nginx para servir el frontend).
+* Configuración de Puertos:
+   * Expón el puerto 80 para el frontend y el 3000 (o el que uses) para el backend.
+   * Configura Nginx como proxy reverso si es necesario.
+* API Gateway:
+   * Configura API Gateway para enrutar solicitudes a la instancia EC2.
+   * Gestiona CORS desde API Gateway para permitir solicitudes del frontend.
+________________
+
+
+7. Pruebas y Validación
+* Pruebas Unitarias: Implementa con Jest o Mocha para el backend.
+* Pruebas de Integración: Verifica la comunicación entre frontend y backend.
+* Scripts de Prueba: Automatiza pruebas con scripts en package.json.
+________________
+
+
+8. Consideraciones Finales
+* Seguridad:
+   * Usa HTTPS en producción (certificados SSL gratuitos con Let's Encrypt).
+   * Valida todas las entradas de usuario para prevenir inyecciones.
+* Escalabilidad:
+   * Diseña la base de datos para soportar múltiples condominios desde el inicio.
+* Monitoreo:
+   * Configura logs con Winston o Morgan para el backend.
+   * Usa AWS CloudWatch para monitorear la instancia EC2.
+________________
+
+
+Cronograma Sugerido
+* Semana 1:
+   * Configuración de EC2 y AWS CLI.
+   * Desarrollo del frontend (estructura básica y login).
+   * Desarrollo del backend (autenticación y gestión de usuarios).
+* Semana 2:
+   * Implementación de servicios de pagos, calendario y documentos.
+   * Integración de OCR.
+   * Desarrollo del panel de administración.
+   * Dockerización y despliegue en EC2.
+   * Pruebas finales y ajustes.
+________________
+
+
+Este documento proporciona una guía clara y estructurada para que tu agente en Cursor IDE pueda desarrollar la aplicación de manera eficiente y rápida. Asegúrate de iterar con pruebas constantes y de dockerizar cada servicio al finalizar su desarrollo. ¡Buena suerte con el proyecto!
+Aquí tienes el Documento Maestro para guiar a tu agente en Cursor IDE en el desarrollo de una aplicación web para la administración de condominios. Este documento está diseñado para que el desarrollo sea rápido, efectivo y se pueda desplegar en una instancia EC2 de AWS (t3.medium) en un plazo de 1 a 2 semanas. La aplicación incluirá servicios esenciales como gestión de pagos, calendarios, documentos y un panel de administración, con integración de OCR para procesar comprobantes y la opción de añadir IA adicional si decides usar tu SaaS de agentes y tools. Cada servicio será dockerizado al final del proceso para facilitar el despliegue.
+Voy a estructurar el documento en secciones claras: arquitectura, tecnologías, configuración inicial, desarrollo de frontend y backend, detalle de cada servicio, integración de IA, despliegue en EC2 y cronograma. También incluiré instrucciones específicas sobre puertos, AWS CLI y la gestión de API Gateway con CORS desde la terminal.
+________________
+
+
+Documento Maestro: Desarrollo de Aplicación Web para Administración de Condominios
+Objetivo
+Desarrollar una aplicación web sencilla y funcional para la administración de condominios, con un frontend en React (usando Vite) y un backend en Node.js, desplegada en una instancia EC2 t3.medium de AWS. La aplicación debe estar lista para producción en 1-2 semanas, con servicios dockerizados y funcionalidades como gestión de pagos, calendarios, documentos y OCR para comprobantes. El agente en Cursor IDE debe iterar rápidamente con pruebas y refactorizar bien el código.
+Tecnologías Principales
+* Frontend: React con Vite
+* Backend: Node.js con Express.js
+* Base de Datos: MongoDB (MongoDB Atlas - plan gratuito)
+* Autenticación: JSON Web Tokens (JWT)
+* OCR (IA): Tesseract.js para procesar comprobantes
+* Despliegue: Docker en EC2 (t3.medium), gestionado con AWS CLI y API Gateway
+* Herramientas de Prueba: Jest o Mocha para pruebas unitarias e integración
+Arquitectura General
+* Frontend: Aplicación React servida desde la instancia EC2 (archivos estáticos).
+* Backend: API RESTful en Node.js, dockerizada y corriendo en EC2.
+* Base de Datos: MongoDB Atlas en la nube para simplificar la gestión.
+* OCR: Integrado en el backend para extraer datos de comprobantes.
+* API Gateway: Gestiona las solicitudes entre el frontend y el backend, con CORS configurado.
+Puertos:
+* Frontend: Puerto 80 (HTTP) o 443 (HTTPS en producción).
+* Backend: Puerto 3000 (desarrollo y producción dentro de Docker).
+* EC2: Configura reglas de seguridad para permitir tráfico en estos puertos.
+Instrucciones Generales para el Agente en Cursor IDE
+* Refactorización: Estructura el código de cada servicio en módulos claros (controladores, servicios, modelos). Refactoriza constantemente para mantenerlo limpio y legible.
+* Pruebas: Implementa pruebas unitarias y de integración para cada servicio. Crea scripts en package.json para ejecutarlas automáticamente.
+* Iteración Rápida: Desarrolla en sprints cortos, probando cada funcionalidad antes de avanzar.
+* Dockerización: Al finalizar cada servicio, crea un Dockerfile y un docker-compose.yml para asegurar que funcione en contenedores.
+* Simplicidad: Prioriza funcionalidad básica para cumplir con el plazo de 1-2 semanas.
+________________
+
+
+1. Configuración Inicial
+Objetivo: Preparar el entorno de desarrollo y la instancia EC2.
+Pasos:
+1. Instancia EC2:
+   * Lanza una instancia t3.medium con Amazon Linux 2 desde la consola de AWS.
+   * Configura el grupo de seguridad para permitir tráfico en:
+      * Puerto 80 (HTTP).
+      * Puerto 443 (HTTPS, producción).
+      * Puerto 3000 (backend en desarrollo).
+      * Puerto 22 (SSH).
+   * Asocia una IP elástica para mantener una dirección fija.
+2. Instalación de AWS CLI:
+   * Conéctate a la instancia via SSH.
+   * Instala AWS CLI con:
+   * bash
+   * sudo yum install awscli -y
+   * Configura las credenciales:
+   * bash
+   * aws configure
+   * Ingresa tu Access Key, Secret Key, región (por ejemplo, us-east-1) y formato de salida (json).
+3. API Gateway:
+   * Crea una API REST desde la consola de AWS:
+      * Define un recurso raíz (por ejemplo, /api).
+      * Configura métodos básicos (GET, POST, PUT) como proxy a la instancia EC2.
+   * Habilita CORS desde la consola o usa AWS CLI:
+   * bash
+   * aws apigateway update-resource --rest-api-id <API_ID> --resource-id <RESOURCE_ID> --patch-operations op=replace,path=/cors,value="*" --region us-east-1
+   * Deploy la API:
+   * bash
+   * aws apigateway create-deployment --rest-api-id <API_ID> --stage-name prod --region us-east-1
+________________
+
+
+2. Desarrollo del Frontend (React con Vite)
+Objetivo: Crear una interfaz sencilla y responsive.
+Pasos:
+1. Configuración:
+   * Inicializa el proyecto:
+   * bash
+npm create vite@latest frontend --template react
+cd frontend
+   * npm install
+   * Instala dependencias:
+   * bash
+   * npm install react-router-dom axios tailwindcss
+   * Configura Tailwind CSS según la documentación oficial.
+2. Estructura:
+   * Crea componentes en src/components:
+      * Login.js
+      * Dashboard.js
+      * Payments.js
+      * Calendar.js
+      * Documents.js
+      * AdminPanel.js
+   * Configura rutas en src/App.jsx con react-router-dom.
+3. Integración con Backend:
+   * Usa axios para conectar con la API:
+   * javascript
+import axios from 'axios';
+   * const API_URL = 'http://<EC2_IP>:3000/api'; // O usa la URL de API Gateway
+   * Gestiona JWT en localStorage para autenticación.
+4. Despliegue:
+   * Construye el frontend:
+   * bash
+   * npm run build
+   * Copia la carpeta dist a la instancia EC2 para servirla con Nginx o el backend.
+________________
+
+
+3. Desarrollo del Backend (Node.js con Express.js)
+Objetivo: Crear una API RESTful para la lógica de negocio.
+Pasos:
+1. Configuración:
+   * Inicializa el proyecto:
+   * bash
+npm init -y
+   * npm install express mongoose jsonwebtoken bcryptjs multer tesseract.js
+   * Crea un archivo index.js básico:
+   * javascript
+const express = require('express');
+const app = express();
+app.use(express.json());
+   * app.listen(3000, () => console.log('Server running on port 3000'));
+2. Estructura:
+   * Organiza en carpetas:
+      * controllers/: Lógica de los endpoints.
+      * models/: Esquemas de MongoDB.
+      * routes/: Rutas de la API.
+      * services/: Lógica de negocio.
+      * middlewares/: Autenticación y errores.
+3. Base de Datos:
+   * Conecta a MongoDB Atlas:
+   * javascript
+const mongoose = require('mongoose');
+   * mongoose.connect('mongodb+srv://<USER>:<PASS>@cluster0.mongodb.net/condominios');
+   * Define modelos básicos (Usuario, Pago, Evento, Documento).
+4. Autenticación:
+   * Implementa JWT en un middleware:
+   * javascript
+const jwt = require('jsonwebtoken');
+const authMiddleware = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(401).json({ message: 'No token' });
+  jwt.verify(token, 'secret', (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+    req.user = user;
+    next();
+  });
+   * };
+________________
+
+
+4. Servicios Específicos
+4.1. Servicio de Autenticación
+* Funcionalidades:
+   * Registro y login de usuarios.
+* Endpoints:
+   * POST /api/auth/register
+   * POST /api/auth/login
+* Implementación:
+   * Usa bcryptjs para encriptar contraseñas.
+   * Genera JWT al iniciar sesión.
+* Pruebas:
+   * Verifica registro y login con Postman o scripts.
+* Dockerización:
+   * Crea un Dockerfile al finalizar.
+4.2. Servicio de Gestión de Usuarios
+* Funcionalidades:
+   * Ver y actualizar perfil.
+* Endpoints:
+   * GET /api/users/profile
+   * PUT /api/users/profile
+* Implementación:
+   * Protege con authMiddleware.
+* Pruebas:
+   * Testea acceso con JWT válido e inválido.
+4.3. Servicio de Pagos
+* Funcionalidades:
+   * Ver historial, subir comprobantes.
+* Endpoints:
+   * GET /api/payments
+   * POST /api/payments/upload
+* Implementación:
+   * Usa multer para subir archivos.
+* Pruebas:
+   * Sube un archivo y verifica almacenamiento.
+4.4. Servicio de Calendario
+* Funcionalidades:
+   * Ver y crear eventos.
+* Endpoints:
+   * GET /api/calendar
+   * POST /api/calendar (solo administradores)
+* Implementación:
+   * Filtra eventos por usuario.
+4.5. Servicio de Documentos
+* Funcionalidades:
+   * Ver y subir documentos.
+* Endpoints:
+   * GET /api/documents
+   * POST /api/documents (solo administradores)
+* Implementación:
+   * Almacena en el sistema de archivos o S3.
+4.6. Servicio de OCR (IA)
+* Funcionalidades:
+   * Extraer datos de comprobantes.
+* Implementación:
+   * Usa tesseract.js:
+   * javascript
+const Tesseract = require('tesseract.js');
+Tesseract.recognize('comprobante.jpg', 'spa').then(({ data }) => {
+  console.log(data.text);
+   * });
+   * Integra en el flujo de subida de pagos.
+4.7. Servicio de Panel de Administración
+* Funcionalidades:
+   * Gestionar usuarios, pagos, eventos, documentos.
+* Implementación:
+   * Extiende endpoints con middleware de rol (isAdmin).
+________________
+
+
+5. Integración de IA Adicional (Opcional)
+Si usas tu SaaS de agentes y tools:
+* Automatización: Clasifica documentos o genera recordatorios.
+* RAG: Responde preguntas frecuentes de condóminos.
+* Implementación: Conecta via API desde el backend.
+________________
+
+
+6. Despliegue en EC2
+Pasos:
+1. Dockerización:
+   * Dockerfile para Backend:
+   * dockerfile
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD ["node", "index.js"]
+   * EXPOSE 3000
+   * docker-compose.yml:
+   * yaml
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+   *       - ./frontend/dist:/usr/share/nginx/html
+2. Despliegue:
+   * Copia los archivos a EC2 via SCP.
+   * Ejecuta:
+   * bash
+   * docker-compose up -d
+3. API Gateway:
+   * Enruta solicitudes a http://<EC2_IP>:3000.
+________________
+
+
+7. Pruebas y Validación
+* Unitarias: Usa Jest para probar funciones.
+* Integración: Verifica frontend-backend.
+* Scripts: Agrega npm test en package.json.
+________________
+
+
+8. Cronograma Sugerido
+* Semana 1:
+   * Configuración EC2 y AWS CLI.
+   * Frontend básico (login, dashboard).
+   * Backend (autenticación, usuarios).
+* Semana 2:
+   * Servicios de pagos, calendario, documentos, OCR.
+   * Panel de administración.
+   * Dockerización y despliegue.
+   * Pruebas finales.
