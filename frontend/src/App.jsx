@@ -23,6 +23,7 @@ import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
 import Users from './pages/Users';
 import AIPage from './pages/AIPage';
+import Cases from './pages/Cases';
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -99,33 +100,17 @@ function App() {
                 <Dashboard />
               </ProtectedRoute>
             }
-           />
+          />
           <Route 
-            path="payments" 
+            path="casos" 
             element={
               <ProtectedRoute>
-                <Payments />
+                <Cases />
               </ProtectedRoute>
             }
           />
           <Route 
-            path="calendar" 
-            element={
-              <ProtectedRoute>
-                <Calendar />
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path="documents" 
-            element={
-              <ProtectedRoute>
-                <Documents />
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path="users" 
+            path="usuarios" 
             element={
               <ProtectedRoute>
                 <Users />
@@ -133,7 +118,31 @@ function App() {
             }
           />
           <Route 
-            path="ai" 
+            path="pagos" 
+            element={
+              <ProtectedRoute>
+                <Payments />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="calendario" 
+            element={
+              <ProtectedRoute>
+                <Calendar />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="documentos" 
+            element={
+              <ProtectedRoute>
+                <Documents />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="ia" 
             element={
               <ProtectedRoute>
                 <AIPage />
